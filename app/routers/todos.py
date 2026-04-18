@@ -2,21 +2,18 @@ from datetime import datetime
 from typing import List
 
 from fastapi import APIRouter, HTTPException
-
-from ..schemas.todo import TodoResponse
+from schemas.todo import TodoResponse
 
 router = APIRouter()
 
-FAKE_DATA: List[TodoResponse] = [
-    TodoResponse(
-        id="1",
-        title="Sample",
-        description="A sample todo",
-        is_completed=False,
-        created_at=datetime.now(),
-        updated_at=datetime.now(),
-    ),
-]
+FAKE_DATA: List[TodoResponse] = []
+
+
+@router.post("/")
+async def create_todo(payload: TodoResponse) -> TodoResponse:
+    payload.id = str(datetime.now().timestamp())
+    FAKE_DATA.append(payload)
+    return payload
 
 
 @router.get("/")
@@ -32,6 +29,22 @@ async def retrieve_todo(tid: str) -> TodoResponse:
     raise HTTPException(status_code=404, detail="Todo not found")
 
 
-@router.post("/")
-async def create_todo() -> TodoResponse:
-    return FAKE_DATA[0]
+@router.patch("/{tid}")
+async def update_todo(tid: str, payload: TodoResponse) -> TodoResponse:
+    for item in FAKE_DATA:
+        if item.id == tid:
+            data = payload.model_dump(exclude_unset=True)
+            for k, v in data.items():
+                setattr(item, k, v)
+            item.updated_at = datetime.now()
+            return item
+    raise HTTPException(status_code=404, detail="Todo not found")
+
+
+@router.delete("/{tid}")
+async def delete_todo(tid: str) -> dict:
+    for i, item in enumerate(FAKE_DATA):
+        if item.id == tid:
+            FAKE_DATA.pop(i)
+            return {"detail": "deleted"}
+    raise HTTPException(status_code=404, detail="Todo not found")

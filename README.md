@@ -1,0 +1,1 @@
+# Todo API - A minimal REST API for managing todo items with basic CRUD operations.

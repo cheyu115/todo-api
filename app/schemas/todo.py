@@ -11,8 +11,11 @@ class TodoBase(BaseModel):
     is_completed: bool = False
 
 
-class TodoCreate(TodoBase):
-    pass
+class TodoCreate(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    title: str = Field(..., max_length=200)
+    description: Optional[str] = Field(None, max_length=1000)
+    is_completed: bool = False
 
 
 class TodoUpdate(BaseModel):

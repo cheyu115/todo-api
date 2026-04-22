@@ -2,7 +2,8 @@ from datetime import datetime
 from typing import List
 
 from fastapi import APIRouter, HTTPException
-from schemas.todo import TodoCreate, TodoResponse, TodoUpdate
+
+from ..schemas.todo import TodoCreate, TodoResponse, TodoUpdate
 
 router = APIRouter()
 

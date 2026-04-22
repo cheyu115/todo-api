@@ -15,7 +15,7 @@ A todo resource should contain the following fields:
 ## Actions Apply to Todo Resource
 
 ### Collection Actions (on /todos endpoint):
-1. **GET /todos** - List all todos with optional filtering and pagination
+1. **GET /todos** - List all todos
 2. **POST /todos** - Create a new todo item
 
 ### Member Actions (on /todos/{id} endpoint):

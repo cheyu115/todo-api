@@ -5,9 +5,6 @@
 ### Request
 - **Method**: GET
 - **URL**: `/todos`
-- **Query Parameters** (optional):
-  - `page` - Page number for pagination
-  - `limit` - Number of items per page
 
 ### Response (200 OK)
 ```json
@@ -21,12 +18,7 @@
       "created_at": "2026-04-17T10:30:00Z",
       "updated_at": "2026-04-17T14:25:00Z"
     }
-  ],
-  "pagination": {
-    "page": 1,
-    "limit": 10,
-    "total": 1
-  }
+  ]
 }
 ```
 
